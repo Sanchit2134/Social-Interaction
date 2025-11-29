@@ -17,7 +17,11 @@ app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [
+    'http://localhost:5173', 
+    'http://localhost:5174',
+    process.env.FRONTEND_URL || 'https://social-interaction-2.onrender.com'
+  ],
   credentials: true,  //Allows cookies and authentication information to be sent with requests (needed for sessions, JWT in cookies, etc).
 };
 app.use(cors(corsOptions));

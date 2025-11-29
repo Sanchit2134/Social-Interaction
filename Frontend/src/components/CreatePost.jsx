@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import { readFileAsDataURL } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import axios from 'axios';
+import api from '@/lib/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from '@/redux/PostSlice';
 
@@ -35,11 +35,10 @@ const CreatePost = ({ open, setOpen }) => {
     if (imagePreview) formData.append("image", file);
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v1/post/addpost', formData, {
+      const res = await api.post('/api/v1/post/addpost', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
+        }
       });
       if (res.data.success) {
         dispatch(setPost([res.data.post, ...posts]));// [1] -> [1,2] -> total element = 2

@@ -1,5 +1,5 @@
 import { setMessages } from '@/redux/chatSlice'
-import axios from 'axios'
+import api from '@/lib/api'
 import  { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,7 +14,7 @@ const useGetAllMessage = () => {
         
         const fetchAllMessages = async()=>{
             try {
-                const res = await axios.get(`http://localhost:8000/api/v1/message/all/${selectedUser._id}`, {withCredentials: true});
+                const res = await api.get(`/api/v1/message/all/${selectedUser._id}`);
                 if(res.data.success){
                     const messages = res.data.messages || [];
                     console.log('Fetched messages:', messages);

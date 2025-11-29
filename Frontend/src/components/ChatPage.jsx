@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { MessageCircleCode } from 'lucide-react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { setSelectedUser } from '@/redux/AuthSlice';
 import { addMessage } from '@/redux/chatSlice';
 import Messages from './Messages';
@@ -19,12 +19,7 @@ const ChatPage = () => {
         if (!textMessage.trim()) return;
         
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/message/send/${receiverId}`, { textMessage }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            });
+            const res = await api.post(`/api/v1/message/send/${receiverId}`, { textMessage });
             if (res.data.success) {
                 // Message will be added via socket, but we add it optimistically here
                 // The addMessage reducer will prevent duplicates

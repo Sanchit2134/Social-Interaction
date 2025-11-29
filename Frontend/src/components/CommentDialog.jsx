@@ -6,7 +6,7 @@ import { MoreHorizontal } from 'lucide-react'
 import { Button } from './ui/button'
 import { useDispatch, useSelector } from 'react-redux'
 import Comment from './Comment'
-import axios from 'axios'
+import api from '@/lib/api'
 import { toast } from 'sonner'
 import { setPost } from '@/redux/PostSlice'
 

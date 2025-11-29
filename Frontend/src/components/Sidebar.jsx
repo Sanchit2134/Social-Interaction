@@ -2,7 +2,7 @@ import { Heart, Home, LogOut, MessageCircle, PlusSquare, Search, TrendingUp } fr
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { toast } from 'sonner'
-import axios from 'axios'
+import api from '@/lib/api'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAuthUser } from '@/redux/AuthSlice'
@@ -20,7 +20,7 @@ const LeftSidebar = () => {
     const [open, setOpen] = useState(false);
     const logoutHandler = async () => {
         try {
-            const res = await axios.get('http://localhost:8000/api/v1/user/logout', { withCredentials: true });
+            const res = await api.get('/api/v1/user/logout');
             if (res.data.success) {
                 dispatch(setAuthUser(null));
                 dispatch(setSelectedPost(null));

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Get API URL from environment variable or default to localhost for development
-const API_URL = import.meta.env.VITE_API_URL || 'https://github.com/Sanchit2134/Social-Interaction';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 // Create axios instance with default config
 const api = axios.create({

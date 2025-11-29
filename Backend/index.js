@@ -25,9 +25,9 @@ app.use(cors(corsOptions));
 app.use("/api/v1/user", userRoute);  
 app.use("/api/v1/post", postRoute);  
 app.use("/api/v1/message", messageRoute);  
-app.use(express.static(path.join(_dirname, '/frontend/dist')));
+app.use(express.static(path.join(_dirname, '/Frontend/dist')));
 app.get('*', (_, res) => {
-  res.sendFile(path.resolve(_dirname, 'frontend', 'dist', 'index.html'));
+  res.sendFile(path.resolve(_dirname, 'Frontend', 'dist', 'index.html'));
 })
 app.get("/", (_, res) => {
   return res.status(200).json({  

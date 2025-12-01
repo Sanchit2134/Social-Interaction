@@ -21,7 +21,7 @@ const allowedOrigins = [
   'http://localhost:5173', 
   'http://localhost:5174',
   'http://localhost:3000',
-  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL || 5173,
   'https://social-interaction-2.onrender.com'
 ].filter(Boolean); // Remove undefined values
 

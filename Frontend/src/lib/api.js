@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-// Get API URL from environment variable or default to localhost for development
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// In development, call backend at localhost:8000
+// In production, use VITE_BACKEND_URL or same-origin relative URLs
+const API_URL = import.meta.env.PROD 
+  ? (import.meta.env.VITE_BACKEND_URL || '') 
+  : 'http://localhost:8000';
 
-// Create axios instance with default config
+// Axios instance for REST API calls
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
@@ -12,6 +15,10 @@ const api = axios.create({
   },
 });
 
-export default api;
-export { API_URL };
+// Socket.io URL: full origin in production, localhost:8000 in dev
+const SOCKET_URL = import.meta.env.PROD
+  ? (import.meta.env.VITE_BACKEND_URL || (typeof window !== 'undefined' ? window.location.origin : ''))
+  : 'http://localhost:8000';
 
+export default api;
+export { API_URL, SOCKET_URL };

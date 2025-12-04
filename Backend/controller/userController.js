@@ -13,13 +13,22 @@ export const register = async (req, res) => {
                 success: false,
             });
         }
-        const user = await User.findOne({ email });
-        if (user) {
+        // Check if email already exists
+        const userByEmail = await User.findOne({ email });
+        if (userByEmail) {
             return res.status(401).json({
                 message: "Try different email",
                 success: false,
             });
-        };
+        }
+        // Check if username already exists
+        const userByUsername = await User.findOne({ username });
+        if (userByUsername) {
+            return res.status(401).json({
+                message: "Username already taken",
+                success: false,
+            });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({
             username,
@@ -32,6 +41,10 @@ export const register = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "An error occurred during registration",
+            success: false
+        });
     }
 }
 export const login = async (req, res) => {
@@ -88,6 +101,10 @@ export const login = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "An error occurred during login",
+            success: false
+        });
     }
 };
 export const logout = async (_, res) => {
@@ -98,8 +115,12 @@ export const logout = async (_, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "An error occurred during logout",
+            success: false
+        });
     }
-};
+}
 export const getProfile = async (req, res) => {
     try {
         const userId = req.params.id;        //populate ---> Replaces the posts array of IDs in the user document with the actual post documents from the Post collection.

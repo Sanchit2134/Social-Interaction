@@ -8,8 +8,25 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors:{
-        origin:process.env.URL,
-        methods:['GET','POST']
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+            if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+                return callback(null, true);
+            }
+            const allowedOrigins = [
+                process.env.FRONTEND_URL,
+                'https://social-interaction-2.onrender.com',
+                process.env.URL
+            ].filter(Boolean);
+            
+            if (allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+            
+            callback(new Error('Not allowed by CORS'));
+        },
+        methods:['GET','POST'],
+        credentials: true
     }
 })
 
